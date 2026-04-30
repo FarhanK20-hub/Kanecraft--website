@@ -58,6 +58,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             Products
           </Link>
           <Link 
+            href="/admin/sample-requests" 
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+              pathname.includes("/admin/sample-requests")
+                ? "bg-[var(--color-brand-primary)]/10 text-[var(--color-brand-primary)] font-medium" 
+                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+            }`}
+          >
+            <LayoutDashboard className="w-5 h-5" />
+            Sample Requests
+          </Link>
+          <Link 
             href="#" 
             className="flex items-center gap-3 px-4 py-3 text-gray-400 dark:text-gray-600 rounded-lg cursor-not-allowed"
           >

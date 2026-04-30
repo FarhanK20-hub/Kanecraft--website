@@ -15,6 +15,8 @@ export const metadata: Metadata = {
   description: "Report-ready ESG data. Drop-in replacement. Same cost. Bigger impact. Kanecraft provides premium sustainable stationery for forward-thinking enterprises.",
 };
 
+import { Chatbot } from "@/components/Chatbot";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,6 +35,7 @@ export default function RootLayout({
               {children}
             </AudioProvider>
           </SmoothScroll>
+          <Chatbot />
         </ThemeProvider>
       </body>
     </html>

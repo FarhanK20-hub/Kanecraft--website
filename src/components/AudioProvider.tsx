@@ -2,8 +2,12 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
+import { usePathname } from "next/navigation";
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isAdmin = pathname?.startsWith("/admin");
+  
   const audioCtxRef = useRef<AudioContext | null>(null);
   const windGainRef = useRef<GainNode | null>(null);
   const windFilterRef = useRef<BiquadFilterNode | null>(null);
@@ -11,7 +15,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
   // Initialize Audio Context and Wind Sound
   const initAudio = () => {
-    if (audioCtxRef.current || isUnlocked) return;
+    if (isAdmin || audioCtxRef.current || isUnlocked) return;
 
     const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
     audioCtxRef.current = ctx;
@@ -57,6 +61,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
   // Play a slightly deeper pop for clicks
   const playClickSound = () => {
+    if (isAdmin) return;
     const ctx = audioCtxRef.current;
     if (!ctx || ctx.state !== "running") return;
 
@@ -79,6 +84,14 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
   // Attach global event listeners for ASMR interactions
   useEffect(() => {
+    if (isAdmin) {
+      // Clean up audio if we navigate to admin panel
+      if (audioCtxRef.current && audioCtxRef.current.state !== "closed") {
+         audioCtxRef.current.suspend();
+      }
+      return;
+    }
+
     const handleInteraction = () => {
       initAudio();
       if (audioCtxRef.current?.state === "suspended") {
@@ -109,11 +122,11 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     return () => {
       document.removeEventListener("click", handleClick);
     };
-  }, [isUnlocked]);
+  }, [isUnlocked, isAdmin]);
 
   // Hook into Lenis scroll velocity to scale wind sound
   useLenis(({ velocity }) => {
-    if (!windGainRef.current || !windFilterRef.current || !audioCtxRef.current) return;
+    if (isAdmin || !windGainRef.current || !windFilterRef.current || !audioCtxRef.current) return;
 
     const speed = Math.abs(velocity);
     

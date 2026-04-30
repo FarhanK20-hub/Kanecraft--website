@@ -1,7 +1,8 @@
 import React from "react";
 import connectToDatabase from "@/lib/mongodb";
 import Product from "@/models/Product";
-import { Package, Tag, FileText, ArrowRight } from "lucide-react";
+import SampleRequest from "@/models/SampleRequest";
+import { Package, Tag, FileText, ArrowRight, ClipboardList } from "lucide-react";
 import Link from "next/link";
 
 // Force dynamic rendering to ensure stats are always up to date
@@ -11,12 +12,13 @@ export default async function AdminDashboard() {
   await connectToDatabase();
 
   // Fetch metrics in parallel
-  const [totalProducts, categoryStats, recentProducts] = await Promise.all([
+  const [totalProducts, categoryStats, recentProducts, totalSampleRequests] = await Promise.all([
     Product.countDocuments(),
     Product.aggregate([
       { $group: { _id: "$category", count: { $sum: 1 } } }
     ]),
-    Product.find().sort({ createdAt: -1 }).limit(5).lean()
+    Product.find().sort({ createdAt: -1 }).limit(5).lean(),
+    SampleRequest.countDocuments()
   ]);
 
   return (
@@ -35,6 +37,16 @@ export default async function AdminDashboard() {
           <div>
             <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Products</p>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">{totalProducts}</p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-[#1A1A1A] p-6 rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm flex items-center gap-4">
+          <div className="w-12 h-12 bg-purple-50 dark:bg-purple-500/10 rounded-lg flex items-center justify-center">
+            <ClipboardList className="w-6 h-6 text-purple-500" />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Sample Requests</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">{totalSampleRequests}</p>
           </div>
         </div>
 
