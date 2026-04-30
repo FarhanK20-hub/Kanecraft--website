@@ -47,3 +47,31 @@ export async function PATCH(
     );
   }
 }
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await connectToDatabase();
+    
+    const { id } = await Promise.resolve(params);
+
+    const deletedRequest = await SampleRequest.findByIdAndDelete(id);
+
+    if (!deletedRequest) {
+      return NextResponse.json(
+        { error: "Sample request not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error: any) {
+    console.error("Error deleting sample request:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}

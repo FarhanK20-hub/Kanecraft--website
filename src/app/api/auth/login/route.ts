@@ -1,12 +1,22 @@
 import { NextResponse } from 'next/server';
+import connectToDatabase from '@/lib/mongodb';
+import AdminConfig from '@/models/AdminConfig';
 
 export async function POST(request: Request) {
   try {
     const { password } = await request.json();
-    const correctPassword = process.env.ADMIN_PASSWORD;
+    
+    await connectToDatabase();
+    let correctPassword = process.env.ADMIN_PASSWORD;
+    
+    // Check if a password is set in the database
+    const config = await AdminConfig.findOne();
+    if (config && config.adminPassword) {
+      correctPassword = config.adminPassword;
+    }
 
     if (!correctPassword) {
-      console.error("ADMIN_PASSWORD is not set in .env.local");
+      console.error("No admin password is set in DB or .env.local");
       return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
     }
 

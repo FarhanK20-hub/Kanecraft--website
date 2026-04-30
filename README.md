@@ -12,8 +12,7 @@ This repository contains the high-performance web application built to showcase 
 
 ## ✨ Features
 * **Premium Tactile UI**: Custom organic cursor, magnetic buttons, and drawn-in scroll highlights.
-* **ASMR Web Audio Experience**: Procedurally generated dynamic wind noise linked to scroll velocity and subtle UI interaction clicks.
-* **Interactive Spotlight Comparison**: A dark-mode "flashlight" reveal effect to compare Kanecraft against traditional wood pulp paper.
+* **Web Audio Experience**: Procedurally generated dynamic wind noise linked to scroll velocity and subtle UI interaction clicks.
 * **Dynamic ESG Calculator**: Real-time visualization of trees preserved, water saved, and carbon prevented based on ream consumption.
 * **Secure Admin Panel**: A protected dashboard and CMS to list, create, edit, and delete products dynamically.
 * **Smooth Scrolling**: Implemented globally using Lenis for a buttery-smooth navigational experience.
