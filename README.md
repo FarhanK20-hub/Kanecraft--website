@@ -77,12 +77,6 @@ kanecraft-web/
 └── public/              # Static assets
 ```
 
-## 📸 Screenshots
-*(Add your screenshots here)*
-* `![Homepage Hero](./public/screenshots/hero.png)`
-* `![Spotlight Interaction](./public/screenshots/spotlight.png)`
-* `![Admin Dashboard](./public/screenshots/admin.png)`
-
 ## 🔐 Environment Variables
 This project requires the following environment variables to function properly:
 * `MONGODB_URI`: Your MongoDB Atlas connection string.
@@ -112,7 +106,3 @@ Contributions are what make the open source community such an amazing place to l
 ## 📄 License
 Distributed under the MIT License. See `LICENSE` for more information.
 
-## 📬 Contact
-Your Name - [@your_twitter](https://twitter.com/your_twitter) - email@example.com
-
-Project Link: [https://github.com/yourusername/kanecraft-web](https://github.com/yourusername/kanecraft-web)
