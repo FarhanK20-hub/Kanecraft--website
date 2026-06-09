@@ -34,7 +34,7 @@ export default function AdminProductsPage() {
       const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete");
       
-      setProducts(products.filter(p => p._id !== id));
+      setProducts(products.filter(p => String(p._id) !== id));
     } catch (error) {
       console.error(error);
       alert("Error deleting product.");
@@ -78,7 +78,7 @@ export default function AdminProductsPage() {
             </thead>
             <tbody>
               {products.map((product) => (
-                <tr key={product._id as string} className="border-b border-gray-200 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-[#1A1A1A]/50 transition-colors">
+                <tr key={String(product._id)} className="border-b border-gray-200 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-[#1A1A1A]/50 transition-colors">
                   <td className="p-4">
                     <div className="font-medium text-gray-900 dark:text-white">{product.title}</div>
                     <div className="text-sm text-gray-500 truncate max-w-xs">{product.description}</div>
@@ -97,7 +97,7 @@ export default function AdminProductsPage() {
                       <Edit2 className="w-4 h-4" />
                     </Link>
                     <button 
-                      onClick={() => handleDelete(product._id as string)}
+                      onClick={() => handleDelete(String(product._id))}
                       className="p-2 text-gray-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />

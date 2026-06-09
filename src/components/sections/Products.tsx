@@ -66,7 +66,7 @@ export function Products({ onOpenModal }: ProductsProps) {
           <div className="grid md:grid-cols-3 gap-8">
             {products.map((product, index) => (
               <motion.div
-                key={product._id as string}
+                key={String(product._id)}
                 style={{ y: yTransforms[index % yTransforms.length] }}
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
